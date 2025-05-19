@@ -1,0 +1,1 @@
+print("📘 Weekly Report Generator Placeholder")
