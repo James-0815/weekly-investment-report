@@ -2,7 +2,7 @@ name: Run Weekly Investment Report
 
 on:
   schedule:
-    - cron: '0 23 * * *'  # 한국 시간 기준 매일 오전 8시 (UTC 기준 23시)
+    - cron: '0 23 * * *'  # 한국 시간 기준 매일 오전 8시 실행 (UTC 기준 23시)
   workflow_dispatch:
 
 jobs:
@@ -20,9 +20,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          ls -al  # 디버깅용: 현재 디렉토리 파일 리스트 확인
           pip install -r requirements.txt
 
       - name: Run Report Generator
         run: |
           python weekly_report.py
-
+          python notion_update.py
