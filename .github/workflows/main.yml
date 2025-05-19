@@ -18,10 +18,16 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Debug folder contents
+        run: |
+          echo "🔍 현재 경로:"
+          pwd
+          echo "📁 디렉토리 목록:"
+          ls -al
+
       - name: Install dependencies
         run: |
-          ls -al  # 디버깅용: 현재 디렉토리 파일 리스트 확인
-          pip install -r requirements.txt
+          pip install -r ./requirements.txt
 
       - name: Run Report Generator
         run: |
