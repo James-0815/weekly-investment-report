@@ -1,0 +1,3 @@
+fpdf
+matplotlib
+notion-client
