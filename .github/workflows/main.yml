@@ -18,18 +18,31 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Debug folder contents
-        run: |
-          echo "🔍 현재 경로:"
-          pwd
-          echo "📁 디렉토리 목록:"
-          ls -al
-
       - name: Install dependencies
         run: |
-          pip install -r ./requirements.txt
+          ls -al  # 디버깅용: 현재 디렉토리 파일 리스트 확인
+          pip install -r requirements.txt
 
       - name: Run Report Generator
         run: |
           python weekly_report.py
           python notion_update.py
+
+      - name: Send Report by Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USER }}
+          password: ${{ secrets.EMAIL_PASS }}
+          subject: "📈 Daily Investment Report"
+          to: your_email@example.com
+          from: "James Report Bot <your_email@example.com>"
+          body: |
+            안녕하세요,  
+            자동 생성된 투자 리포트를 첨부드립니다.  
+            오늘도 성공적인 투자 되세요.
+
+            - 제임스 드림
+          attachments: |
+            weekly_report.pdf
