@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          ls -al  # 디버깅용: 현재 디렉토리 파일 리스트 확인
+          ls -al
           pip install -r requirements.txt
 
       - name: Run Report Generator
@@ -28,21 +28,12 @@ jobs:
           python weekly_report.py
           python notion_update.py
 
-      - name: Send Report by Email
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.EMAIL_USER }}
-          password: ${{ secrets.EMAIL_PASS }}
-          subject: "📈 Daily Investment Report"
-          to: your_email@example.com
-          from: "James Report Bot <your_email@example.com>"
-          body: |
-            안녕하세요,  
-            자동 생성된 투자 리포트를 첨부드립니다.  
-            오늘도 성공적인 투자 되세요.
+      - name: Send Report via Email
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: |
+          echo "Sending email..."
+          python send_email.py
 
-            - 제임스 드림
-          attachments: |
-            weekly_report.pdf
