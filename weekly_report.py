@@ -1,12 +1,10 @@
 from fpdf import FPDF
 from datetime import datetime
 
-# PDF 생성
 pdf = FPDF()
 pdf.add_page()
 pdf.set_font("Arial", size=12)
 
-# 리포트 내용 (원하는 내용으로 바꾸세요)
 title = "📈 제임스의 주간 투자 리포트"
 date = datetime.now().strftime("%Y-%m-%d")
 content_lines = [
@@ -23,9 +21,7 @@ content_lines = [
     "- 채권과 암호화폐 균형 유지",
 ]
 
-# PDF 채우기
 for line in content_lines:
     pdf.cell(200, 10, txt=line, ln=True)
 
-# 파일 저장
 pdf.output("report.pdf")
